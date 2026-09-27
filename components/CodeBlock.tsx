@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Check, Copy } from "lucide-react";
+import Prism from "prismjs";
+import "prismjs/components/prism-python";
+import "prismjs/components/prism-bash";
+import "prismjs/components/prism-batch";
+import "prismjs/components/prism-groovy";
 
 interface CodeBlockProps {
   filename?: string;
@@ -12,13 +17,25 @@ interface CodeBlockProps {
 export default function CodeBlock({ filename, language = "python", code }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
+  const highlightedCode = useMemo(() => {
+    try {
+      const lang = language.toLowerCase();
+      const grammar = Prism.languages[lang] || Prism.languages.plain;
+      if (grammar) {
+        return Prism.highlight(code, grammar, lang);
+      }
+    } catch {
+      // Fallback if grammar lookup fails
+    }
+    return code;
+  }, [code, language]);
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
       setCopied(false);
     }
   };
@@ -66,7 +83,10 @@ export default function CodeBlock({ filename, language = "python", code }: CodeB
       </div>
       <div className="overflow-x-auto p-4 text-[13px] leading-relaxed font-mono">
         <pre className="text-gray-200">
-          <code>{code}</code>
+          <code
+            className={`language-${language}`}
+            dangerouslySetInnerHTML={{ __html: highlightedCode }}
+          />
         </pre>
       </div>
     </div>

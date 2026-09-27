@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import CodeBlock from "./CodeBlock";
-import { ExternalLink, CheckCircle2, Play } from "lucide-react";
+import { ExternalLink, CheckCircle2 } from "lucide-react";
 
 export default function TopicSelenium() {
   const installCmd = `# 1. Install Selenium (Selenium 4+ has built-in automatic driver management)
@@ -20,8 +20,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Target URL: The dummy crypto wallet inside this Next.js app
-TARGET_URL = "http://localhost:3000/dummy-wallet"
+# Target URL: Live Vercel production deployment
+TARGET_URL = "https://softarch-testing.vercel.app/dummy-wallet"
+# Alternatively for local development: TARGET_URL = "http://localhost:3000/dummy-wallet"
 
 def test_successful_login():
     print("\\n[TEST 1] Testing Successful Login Flow...")
@@ -48,7 +49,7 @@ def test_successful_login():
         login_button.click()
 
         # 5. Wait for status message and assert success
-        status_element = WebDriverWait(driver, 5).until(
+        status_element = WebDriverWait(driver, 8).until(
             EC.presence_of_element_located((By.ID, "status-message"))
         )
 
@@ -78,7 +79,7 @@ def test_invalid_login():
         driver.find_element(By.ID, "login-btn").click()
 
         # Assert error message appears
-        status_element = WebDriverWait(driver, 5).until(
+        status_element = WebDriverWait(driver, 8).until(
             EC.presence_of_element_located((By.ID, "status-message"))
         )
         assert "Invalid credentials" in status_element.text
@@ -95,7 +96,7 @@ if __name__ == "__main__":
     print("\\nAll Selenium tests passed successfully! ✨")
 `;
 
-  const runScriptCmd = `# Run the Selenium test script
+  const runScriptCmd = `# Run the Selenium test script directly against the live URL
 python test_selenium_login.py`;
 
   return (
@@ -114,17 +115,25 @@ python test_selenium_login.py`;
         </p>
       </div>
 
-      {/* Target Dummy Site Notification Banner */}
+      {/* Target Dummy Site Notification Banner with Live Vercel URL */}
       <div className="rounded-card border border-forest-ink/20 bg-linen-mist p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <span className="text-xs font-bold uppercase tracking-wider text-spruce block mb-1">
-            Target Website Under Test
+            Target Website Under Test (Live)
           </span>
           <p className="text-sm font-semibold text-forest-ink">
             WiseVault Crypto Wallet Dummy Login Page
           </p>
           <p className="text-xs text-slate mt-0.5">
-            Hosted locally at <code className="font-mono font-bold text-forest-ink">http://localhost:3000/dummy-wallet</code>
+            Deployed live at:{" "}
+            <a
+              href="https://softarch-testing.vercel.app/dummy-wallet"
+              target="_blank"
+              rel="noreferrer"
+              className="font-mono font-bold text-forest-ink underline hover:text-spruce"
+            >
+              https://softarch-testing.vercel.app/dummy-wallet
+            </a>
           </p>
         </div>
         <Link
@@ -155,7 +164,7 @@ python test_selenium_login.py`;
           </h2>
         </div>
         <p className="text-xs text-slate mt-1 mb-2">
-          This script tests both a valid login (unlocks wallet) and an invalid login (checks error message).
+          This script tests both a valid login (unlocks wallet) and an invalid login against the live Vercel URL.
         </p>
         <CodeBlock filename="test_selenium_login.py" language="python" code={seleniumScript} />
       </div>
@@ -166,7 +175,7 @@ python test_selenium_login.py`;
           3. Run the Automation
         </h2>
         <p className="text-xs text-slate mb-2">
-          Make sure this website is running (<code className="font-mono">npm run dev</code>), then run:
+          Execute the script from your terminal to launch Chrome and run the automated login flow:
         </p>
         <CodeBlock filename="terminal" language="bash" code={runScriptCmd} />
       </div>
@@ -204,7 +213,7 @@ python test_selenium_login.py`;
               <tr>
                 <td className="px-4 py-2.5 font-medium">Status / Alert</td>
                 <td className="px-4 py-2.5 font-mono text-spruce">id=&quot;status-message&quot;</td>
-                <td className="px-4 py-2.5 font-mono">WebDriverWait(driver, 5)...</td>
+                <td className="px-4 py-2.5 font-mono">WebDriverWait(driver, 8)...</td>
               </tr>
             </tbody>
           </table>
@@ -215,8 +224,8 @@ python test_selenium_login.py`;
       <div className="rounded-card border border-spruce/30 bg-linen-mist/60 p-4 flex items-start gap-3">
         <CheckCircle2 className="h-5 w-5 text-spruce shrink-0 mt-0.5" />
         <div className="text-xs text-forest-ink leading-relaxed">
-          <strong className="block font-bold mb-1">Headless Tip for Production / CI:</strong>
-          To run tests without popping up an actual browser window (e.g. on Jenkins or remote servers), add:
+          <strong className="block font-bold mb-1">Headless Tip for CI/CD Pipelines:</strong>
+          To run tests silently in CI/CD without an actual browser GUI, configure headless mode:
           <br />
           <code className="font-mono bg-paper px-1.5 py-0.5 rounded border border-pebble/30 mt-1 inline-block">
             options = webdriver.ChromeOptions(); options.add_argument(&quot;--headless=new&quot;)

@@ -7,7 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-TARGET_URL = "http://localhost:3000/dummy-wallet"
+# Target URL: Live Vercel production deployment
+TARGET_URL = "https://softarch-testing.vercel.app/dummy-wallet"
+# Alternatively for local testing: TARGET_URL = "http://localhost:3000/dummy-wallet"
 
 def test_successful_login():
     print("\n[TEST 1] Testing Successful Login Flow...")
@@ -29,7 +31,7 @@ def test_successful_login():
 
         login_button.click()
 
-        status_element = WebDriverWait(driver, 5).until(
+        status_element = WebDriverWait(driver, 8).until(
             EC.presence_of_element_located((By.ID, "status-message"))
         )
 
@@ -56,7 +58,7 @@ def test_invalid_login():
         driver.find_element(By.ID, "password").send_keys("WrongPass999")
         driver.find_element(By.ID, "login-btn").click()
 
-        status_element = WebDriverWait(driver, 5).until(
+        status_element = WebDriverWait(driver, 8).until(
             EC.presence_of_element_located((By.ID, "status-message"))
         )
         assert "Invalid credentials" in status_element.text

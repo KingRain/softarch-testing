@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Logo from "@/components/Logo";
 import DummyCryptoWallet from "@/components/DummyCryptoWallet";
 
 export default function DummyWalletPage() {
@@ -12,7 +13,10 @@ export default function DummyWalletPage() {
         >
           <ArrowLeft className="h-3.5 w-3.5" /> Back to Testing Guide
         </Link>
-        <span className="text-xs font-mono text-slate">URL: /dummy-wallet</span>
+        <div className="flex items-center gap-2">
+          <Logo size={24} />
+          <span className="text-xs font-mono text-slate">softarch-testing.vercel.app</span>
+        </div>
       </div>
 
       <DummyCryptoWallet standalone={false} />

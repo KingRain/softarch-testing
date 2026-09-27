@@ -39,3 +39,67 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #163300;
 }
+
+/* Prism.js Syntax Highlighting Theme (Wise Edition) */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #868685;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: #94a3b8;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #fde047;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #a3e635;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #67e8f9;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #9fe870;
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #38bdf8;
+  font-weight: 500;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fb923c;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}

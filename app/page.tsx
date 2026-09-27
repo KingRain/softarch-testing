@@ -13,6 +13,7 @@ import {
   X,
   Sparkles,
 } from "lucide-react";
+import Logo from "@/components/Logo";
 import TopicPytest from "@/components/TopicPytest";
 import TopicSelenium from "@/components/TopicSelenium";
 import TopicJenkins from "@/components/TopicJenkins";
@@ -79,10 +80,8 @@ export default function Home() {
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-pill bg-forest-ink text-lime-voltage font-black text-sm tracking-tighter">
-              ST
-            </span>
+          <Link href="/" className="flex items-center gap-3">
+            <Logo size={36} />
             <div className="leading-tight">
               <span className="font-extrabold text-base tracking-tight text-obsidian block">
                 TestingGuide
@@ -96,15 +95,16 @@ export default function Home() {
 
         {/* Top Right Actions */}
         <div className="flex items-center gap-2">
-          <Link
-            href="/dummy-wallet"
+          <a
+            href="https://softarch-testing.vercel.app/dummy-wallet"
             target="_blank"
+            rel="noreferrer"
             className="hidden sm:inline-flex items-center gap-1.5 rounded-pill border border-forest-ink bg-paper px-3.5 py-1.5 text-xs font-semibold text-forest-ink hover:bg-linen-mist transition"
           >
             <Wallet className="h-3.5 w-3.5 text-spruce" />
-            <span>Open Dummy App</span>
+            <span>Live Dummy App</span>
             <ExternalLink className="h-3 w-3 text-pebble" />
-          </Link>
+          </a>
           <button
             type="button"
             onClick={() => setActiveTab("dummy-wallet")}
@@ -224,13 +224,14 @@ export default function Home() {
             </button>
 
             <div className="mt-3 px-2">
-              <Link
-                href="/dummy-wallet"
+              <a
+                href="https://softarch-testing.vercel.app/dummy-wallet"
                 target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-1.5 text-[11px] text-spruce hover:underline"
               >
-                <ExternalLink className="h-3 w-3" /> Standalone URL: /dummy-wallet
-              </Link>
+                <ExternalLink className="h-3 w-3" /> Live URL: softarch-testing.vercel.app
+              </a>
             </div>
           </div>
 
@@ -238,7 +239,7 @@ export default function Home() {
           <div className="mt-8 rounded-card bg-fog/70 p-3.5 text-xs text-charcoal border border-pebble/20">
             <span className="font-bold text-forest-ink block mb-1">Testing Tip</span>
             <p className="text-[11px] leading-relaxed text-slate">
-              Copy the code blocks into your project directory to run Python pytest and Selenium tests locally!
+              Copy the code blocks to run Python unit tests locally or execute Selenium directly against our live Vercel URL!
             </p>
           </div>
         </aside>
@@ -260,7 +261,10 @@ export default function Home() {
                   </h1>
                   <p className="mt-3 text-base text-charcoal leading-relaxed">
                     This is the live dummy website that Selenium automated tests run against.
-                    You can try testing it manually here or run the Selenium script on <code className="font-mono text-sm bg-fog px-1.5 py-0.5 rounded text-forest-ink">http://localhost:3000/dummy-wallet</code>.
+                    You can test it manually here or run the Selenium script on{" "}
+                    <code className="font-mono text-sm bg-fog px-1.5 py-0.5 rounded text-forest-ink font-semibold">
+                      https://softarch-testing.vercel.app/dummy-wallet
+                    </code>.
                   </p>
                 </div>
 
