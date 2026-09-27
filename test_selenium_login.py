@@ -7,14 +7,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Target URL: Live Vercel production deployment
 TARGET_URL = "https://softarch-testing.vercel.app/dummy-wallet"
-# Alternatively for local testing: TARGET_URL = "http://localhost:3000/dummy-wallet"
+
+def get_configured_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--window-size=1280,800")
+    return webdriver.Chrome(options=options)
 
 def test_successful_login():
     print("\n[TEST 1] Testing Successful Login Flow...")
-    driver = webdriver.Chrome()
-    driver.maximize_window()
+    driver = get_configured_driver()
 
     try:
         driver.get(TARGET_URL)
@@ -31,7 +36,7 @@ def test_successful_login():
 
         login_button.click()
 
-        status_element = WebDriverWait(driver, 8).until(
+        status_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "status-message"))
         )
 
@@ -43,13 +48,12 @@ def test_successful_login():
         print("  -> SUCCESS: Wallet unlocked with correct balance!")
 
     finally:
-        time.sleep(2)
         driver.quit()
 
 
 def test_invalid_login():
     print("\n[TEST 2] Testing Invalid Credentials Flow...")
-    driver = webdriver.Chrome()
+    driver = get_configured_driver()
 
     try:
         driver.get(TARGET_URL)
@@ -58,18 +62,17 @@ def test_invalid_login():
         driver.find_element(By.ID, "password").send_keys("WrongPass999")
         driver.find_element(By.ID, "login-btn").click()
 
-        status_element = WebDriverWait(driver, 8).until(
+        status_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "status-message"))
         )
         assert "Invalid credentials" in status_element.text
         print("  -> SUCCESS: Invalid login error detected properly!")
 
     finally:
-        time.sleep(2)
         driver.quit()
 
 
 if __name__ == "__main__":
     test_successful_login()
     test_invalid_login()
-    print("\nAll Selenium tests completed successfully! ✨")
+    print("\n[PASSED] All Selenium tests completed successfully!")

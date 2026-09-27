@@ -10,49 +10,23 @@ export default function Logo({ className = "", size = 32 }: LogoProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 48 48"
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`shrink-0 ${className}`}
       aria-label="TestingGuide Logo"
     >
-      {/* Background Rounded Shield / Pill Base */}
-      <rect width="48" height="48" rx="14" fill="#163300" />
+      {/* Brand Base Squircle - Forest Ink */}
+      <rect width="40" height="40" rx="10" fill="#163300" />
 
-      {/* Outer subtle ring */}
-      <rect
-        x="1.5"
-        y="1.5"
-        width="45"
-        height="45"
-        rx="12.5"
-        stroke="#9fe870"
-        strokeOpacity="0.25"
-        strokeWidth="1.5"
-      />
-
-      {/* Diagnostic Lab / Flask Grid Nodes */}
-      <circle cx="16" cy="16" r="2.5" fill="#9fe870" />
-      <circle cx="32" cy="16" r="2.5" fill="#9fe870" />
+      {/* Signature Bold Electric Lime Verification Mark */}
       <path
-        d="M16 16H32"
+        d="M10.5 21L16.5 27L29.5 13"
         stroke="#9fe870"
-        strokeWidth="1.5"
-        strokeDasharray="2 2"
-        strokeOpacity="0.6"
-      />
-
-      {/* Main Checkmark / Assertion Route */}
-      <path
-        d="M14 26L21 33L35 19"
-        stroke="#9fe870"
-        strokeWidth="3.5"
+        strokeWidth="4"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-
-      {/* Sparkle / Voltage Accent */}
-      <circle cx="36" cy="32" r="1.5" fill="#9fe870" />
     </svg>
   );
 }
